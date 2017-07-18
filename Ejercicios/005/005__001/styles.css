@@ -1,0 +1,355 @@
+@charset "UTF-8";
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #71777f;
+    background-color: #fff;
+    position: relative;
+}
+
+header,
+nav,
+article,
+footer {
+    position: relative;
+}
+
+nav {
+	background: linear-gradient(to bottom,#0079c1 0,#00529b 100%);
+	height: 50px;
+	vertical-align: middle;
+}
+
+article {
+    background-image: url("Home-oportunidades_1200x504.jpg");
+    background-position: top center;
+    background-repeat: no-repeat;
+    min-height: 374px;
+}
+
+a {
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 42px;
+    color: white;
+    text-align: center;
+    text-shadow: #000 0.1em 0.1em 0.2em;
+    display: inline-block;
+    width: 99%;
+    position: relative;
+}
+
+footer:last-child {
+    border-top: solid 1px silver;
+    background-color: #eeeeee;
+    padding-bottom: 4px;
+}
+
+button {
+    background: linear-gradient(to bottom,#0079c1 0,#00559d 100%);
+    border-radius: 4px;
+    padding: 2px 10px;
+    border: 1px solid #00559d;
+    color: #FFF;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    box-shadow: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+button.acceso {
+    background: linear-gradient(to bottom,#59c000 0,#499900 100%);
+    border: 1px solid #499900;
+}
+
+button.mas {
+    padding: 14px 40px;
+    font-size: 24px;
+    border-radius: 6px;
+    background: #0078d2;
+    border: 1px solid #0078d2;
+    box-shadow: 5px 5px 23px -3px rgba(0, 0, 0, .3);
+}
+
+button.mas:hover {
+    opacity: 0.8;
+}
+
+.container {
+    width: 99%;
+    max-width: 960px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+}
+
+.logo-enlaces {
+    display: inline-block;
+    position: relative;
+    width: 54%;
+}
+
+.logo {
+    display: inline-block;
+    margin-right: 4px;
+    margin-top: 0;
+}
+
+.menu-logo {
+    display: inline-block;
+    vertical-align: bottom;
+    position: relative;
+}
+
+.ayuda-acceso {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    width: 45%;
+    text-align: right;
+}
+
+.ayuda {
+    display: block;
+    font-size: 11px;
+}
+
+.ayuda-item {
+    vertical-align: top;
+    display: inline-block;
+    position: relative;
+    margin-right: 4px;
+}
+
+.ayuda-item:last-child {
+    margin-right: 0;
+}
+
+.acceso {
+    display: block;
+}
+
+.acceso-item {
+    vertical-align: bottom;
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    margin-right: 4px;
+}
+
+.acceso-item:last-child {
+    margin-right: 0;
+}
+
+.menu {
+    padding: 0;
+    display: table;
+    width: 99%;
+    font-size: 13px;
+}
+
+nav .menu {
+    margin: 0;
+}
+
+.menu .menu-item {
+    vertical-align: top;
+}
+
+.menu-item {
+    display: table-cell;
+    text-align: left;
+    position: relative;
+    font-size: 12px;
+    padding-right: 4px;
+    white-space: nowrap;
+}
+
+.menu-item:last-child {
+    padding-right: 0;
+}
+
+.submenu,
+.submenu-multi,
+.submenu-multi-back {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    list-style: none;
+    background: white;
+    padding: 4px;
+    border: solid 1px gray;
+}
+
+.submenu,
+.submenu-multi {
+    left: 0;
+}
+
+.submenu-multi-back {
+    right: 0;
+}
+
+.submenu-multi .submenu,
+.submenu-multi-back .submenu {
+    border: none;
+    position: relative;
+}
+
+.menu-item:hover .submenu,
+.menu-item:hover .submenu-multi,
+.menu-item:hover .submenu-multi-back {
+    display: table;
+}
+
+.menu-item > a {
+    color: #006cbf;
+}
+
+.menu-item:hover > a {
+    color: #08c;
+}
+
+.menu > .menu-item > a {
+    padding: 2px;
+}
+
+.menu > .menu-item:hover > a {
+    border: solid 1px gray;
+    border-bottom: none;
+}
+
+nav .menu > .menu-item > a {
+	color: #fff;
+}
+nav .menu > .menu-item:hover > a {
+	color: #006cbf;
+	background: #fff;
+}
+
+.menu-logo .menu > .menu-item > a,
+.menu-logo .menu > .menu-item > a:hover {
+	color: #004C99;
+}
+.menu-logo .menu > .menu-item > a.title,
+.menu-logo .menu > .menu-item > a.title:hover {
+	border: 0;
+	color: #8B9098;
+}
+
+.ayuda-item > a,
+.ayuda-item > a:hover {
+	color: #8B9098;
+}
+
+a.urgencia {
+	color: #b2353e;
+}
+
+.submenu .menu-item {
+    display: block;
+    text-align: left;
+}
+
+
+/*
+.submenu-multi {
+    min-width: 300px;
+}*/
+
+.multi-item {
+    vertical-align: top;
+    display: table-cell;
+}
+
+.multi-item .title {
+	color: #006cbf;
+    margin-right: 4px;
+    text-align: left;
+}
+
+.multi-item .title:last-child {
+    margin-right: 0;
+}
+
+.botones {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	width: 99%;
+	bottom: 0;
+}
+
+
+.enlaces {
+    padding: 0;
+    display: table;
+    width: 99%;
+}
+
+.subenlaces {
+    padding: 0;
+}
+
+.enlace-item {
+    vertical-align: top;
+    display: table-cell;
+    position: relative;
+    font-size: 12px;
+    padding-right: 4px;
+    max-width: 260px;
+    text-align: center;
+}
+
+.enlace-item:last-child {
+    padding-right: 0;
+}
+
+.subenlaces .enlace-item {
+    display: block;
+    text-align: left;
+}
+
+.multienlace-item {
+    vertical-align: top;
+    display: table-cell;
+    position: relative;
+    border-right: solid 1px silver;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.multienlace-item:first-child {
+    padding-left: 0;
+}
+
+.multienlace-item:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+.enlaces {
+    font-size: 11px;
+    color: #434a58;
+}
+
+.enlaces .title {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.enlaces a {
+	color: #8c9299;
+}
+
+.multienlace-item a:hover {
+	color: #003f8d;
+}

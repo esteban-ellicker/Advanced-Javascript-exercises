@@ -1,0 +1,20 @@
+
+.controles button {
+    margin-right: 4px;
+}
+
+.controles button:last-child {
+    margin-right: 0;
+}
+
+.acciones button {
+    margin-right: 4px;
+}
+
+.acciones button:last-child {
+    margin-right: 0;
+}
+
+.nombre {
+   text-transform: capitalize;
+}

@@ -1,0 +1,144 @@
+body,
+label,
+select,
+input,
+button {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+select,
+input,
+button {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #289;
+}
+
+label {
+    padding: 0 0 2px 2px;
+    font-size: 12px;
+    color: #789;
+}
+
+button {
+    background: linear-gradient(to bottom, #3bf 0, #08c 100%);
+    color: #025;
+}
+
+.circuito {
+    background-color: black;
+    padding: 4px;
+}
+
+.pista {
+    margin: 4px;
+    padding: 4px;
+    border-bottom: 2px dashed yellow;
+}
+
+.pista .posicion {
+    color: white;
+}
+
+.vehiculo {
+    max-width: 150px;
+}
+
+.podio {
+    margin: 4px;
+    padding: 4px;
+}
+
+.podio .vehiculo {
+    max-width: 100px;
+}
+
+.vehiculo-podio {
+    margin: 4px;
+    padding: 4px;
+}
+
+.vehiculo-podio td {
+    font-size: 30px;
+}
+
+.podio .posicion,
+.podio .tiempo,
+.podio .velocidad,
+.podio .aceleracion {
+    text-align: right;
+}
+
+.podio table {
+    border-collapse: collapse;
+}
+
+.podio table td,
+.podio table th {
+    padding: 4px;
+    border: 1px solid silver;
+}
+.podio table th {
+    color: #789;
+}
+
+.controles {
+    position: relative;
+    padding: 4px;
+}
+
+.control {
+    position: relative;
+    display: inline-block;
+    margin: 0 16px 8px 0;
+    vertical-align: bottom;
+}
+
+.control .col {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.control image {
+    position: relative;
+    display: inline-block;
+}
+
+.control label {
+    position: relative;
+    display: block;
+}
+
+.control label.posterior {
+    font-size: 10px;
+    display: inline-block;
+}
+
+.control .number {
+    text-align: right;
+}
+
+.control .src-imagen {
+    padding-left: 6px;
+    max-width: 75px;
+}
+
+.start-button {
+    background: linear-gradient(to bottom, #6c0 0, #5a0 100%);
+    border: 1px solid #5a0;
+    padding: 8px 12px;
+    font-size: 15px;
+    color: #050;
+}
+
+.mensajes {
+    display: none;
+    border-radius: 6px;
+    border: 1px solid #c00;
+    color: #800;
+    padding: 16px;
+    margin: 0 0 8px 0;
+    text-align: center;
+}

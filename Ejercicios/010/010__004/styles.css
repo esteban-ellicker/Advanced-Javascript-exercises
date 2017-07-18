@@ -1,0 +1,271 @@
+body,
+label,
+select,
+input,
+textarea,
+button {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+h1 {
+    text-align: center;
+}
+
+aside {
+    padding: 8px;
+}
+
+select,
+input,
+textarea,
+button {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #279;
+}
+
+.validado input:invalid {
+    background-color: #ffeeee;
+}
+
+label {
+    padding: 0 0 2px 2px;
+    font-size: 12px;
+    color: #789;
+}
+
+button {
+    background: linear-gradient(to bottom, #3bf 0, #08c 100%);
+    color: #025;
+}
+
+.numero {
+    text-align: right;
+}
+
+.acciones button {
+    min-width: 100px;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.contenedor {
+    position: relative;
+    clear: both;
+}
+
+.col {
+    float: left;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.col:first-child {
+    max-width: 300px;
+}
+
+.col:last-child {
+    max-width: calc(100% - 300px);
+}
+
+.carta {
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ffe 0%, #eba 25%, #fca 75%, #fca 75%, #b98 100%);
+    position: relative;
+}
+
+.carta h2 {
+    text-align: center;
+}
+
+.carta:before,
+.carta:after {
+    box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
+    position: absolute;
+    bottom: 14px;
+    z-index: -1;
+    width: 50%;
+    height: 20%;
+    content: "";
+}
+
+.carta::before {
+    transform: rotate(-3deg);
+    left: 8px;
+}
+
+.carta::after {
+    transform: rotate(3deg);
+    right: 8px;
+}
+
+.carta table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.carta table th {
+    font-size: 10px;
+    color: #632;
+}
+
+.carta table td,
+.carta table th {
+    padding: 4px;
+    border: 1px solid #854;
+    min-width: 20px;
+    max-width: 100px;
+    color: #310;
+}
+
+.carta .comidas .tipo {
+    font-size: 8px;
+    text-transform: uppercase;
+}
+
+.carta tr[existencias="0"] {
+    display: none;
+}
+
+.mesas {
+    text-align: center;
+}
+
+.mesas .mesa {
+    position: relative;
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    margin: 24px;
+    border: 1px solid #854;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fba 0%, #965 25%, #c75 75%, #c75 75%, #743 100%);
+    min-width: 96px;
+    min-height: 96px;
+    box-shadow: 4px 4px 3px #ccc;
+}
+
+.mesa[capacidad="1"] {
+    min-width: 96px;
+    min-height: 96px;
+}
+
+.mesa[capacidad="2"] {
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.mesa[capacidad="3"] {
+    min-width: 104px;
+    min-height: 104px;
+}
+
+.mesa[capacidad="4"] {
+    min-width: 108px;
+    min-height: 108px;
+}
+
+.mesa[capacidad="5"] {
+    min-width: 112px;
+    min-height: 112px;
+}
+
+.mesa[capacidad="6"] {
+    min-width: 116px;
+    min-height: 116px;
+}
+
+.mesa[capacidad="7"] {
+    min-width: 120px;
+    min-height: 120px;
+}
+
+.mesa[capacidad="8"] {
+    min-width: 124px;
+    min-height: 124px;
+}
+
+.mesa[capacidad="9"] {
+    min-width: 128px;
+    min-height: 128px;
+}
+
+.mesa[capacidad="10"] {
+    min-width: 132px;
+    min-height: 132px;
+}
+
+.mesa[capacidad="11"] {
+    min-width: 136px;
+    min-height: 136px;
+}
+
+.mesa[capacidad="12"] {
+    min-width: 140px;
+    min-height: 140px;
+}
+
+.mesas .mesa .item {
+    padding-left: 4px;
+    display: block;
+}
+
+.mesas .info {
+    text-align: left;
+    font-size: 10px;
+}
+
+.mesas .mesa h3 {
+    color: #521;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.mesas .mesa .item .label {
+    text-transform: capitalize;
+    display: inline-block;
+    min-width: 60px;
+    color: #521;
+}
+
+.mesas .mesa .item .label::after {
+    content: ":";
+    color: #854;
+}
+
+.mesas .mesa .item .data {
+    display: inline-block;
+    min-width: 40px;
+}
+
+.recepcion {
+    position: relative;
+    clear: both;
+}
+
+.espera .grupo {
+    position: relative;
+    display: inline-block;
+    padding: 4px;
+    margin: 8px;
+    background: linear-gradient(to bottom, #fed 0%, #db9 25%, #eb9 75%, #eb9 75%, #b98 100%);
+    border-radius: 4px;
+}
+
+@media (max-width: 500px) {
+    .col:first-child {
+        max-width: 99%;
+    }
+    .col:last-child {
+        max-width: 99%;
+    }
+    .carta table td,
+    .carta table th {
+        min-width: 24%;
+        max-width: 50%;
+    }
+}

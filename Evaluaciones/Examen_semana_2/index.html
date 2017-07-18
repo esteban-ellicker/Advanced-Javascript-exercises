@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Examen semana 2</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="main.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="col">
+            <aside id="datos-tienda" class="datos-tienda">
+                <h2 id="nombre-tienda">Tienda de Esteban</h2>
+                <p id="direccion-tienda">Calzada General Mariano Escobedo 303</p>
+            </aside>
+            <aside id="add-productos" class="add-productos">
+                <h2>Añadir Producto</h2>
+                <form id="form-add-producto">
+                    <div class="control" id="control-nombre">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required />
+                    </div>
+                    <div class="control" id="control-url-imagen">
+                        <label for="url-imagen">url-imagen</label>
+                        <input type="url" id="url-imagen" name="url-imagen" />
+                    </div>
+                    <div class="control" id="control-precio">
+                        <label for="precio">precio</label>
+                        <input type="number" id="precio" name="precio" class="number" required />
+                    </div>
+                    <div class="control" id="control-descripcion">
+                        <label for="descripcion">descripcion</label>
+                        <textarea id="descripcion" name="descripcion" rows="5"></textarea>
+                    </div>
+                    <div class="control">
+                        <button type="button" class="add-button" id="add-button">Añadir Producto</button>
+                    </div>
+                    <div class="mensajes" id="mensajes">
+                    </div>
+                </form>
+            </aside>
+        </div>
+        <div class="col">
+            <article class="productos">
+                <h2>Listado de productos</h2>
+                <div id="productos"></div>
+            </article>
+        </div>
+    </div>
+</body>
+
+</html>

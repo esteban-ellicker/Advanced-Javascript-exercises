@@ -1,0 +1,93 @@
+body,
+label,
+input,
+button {
+    position: relative;
+    ;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+input,
+button {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #279;
+}
+
+input:invalid {
+    background-color: #ffeeee;
+}
+
+button {
+    background: linear-gradient(160deg, #08c 0, #006 100%);
+    color: #fff;
+}
+
+label {
+    padding: 0 0 2px 2px;
+    font-size: 12px;
+    color: #789;
+}
+
+.contenedor {
+    margin-top: 8px;
+    position: relative;
+}
+
+.contenedor:first-child {
+    margin-top: 0;
+}
+
+form {
+    background: linear-gradient(to left, #fff 0, #def 100%);
+    border-radius: 4px;
+}
+
+form .item {
+    position: relative;
+    display: inline-block;
+    margin: 8px;
+}
+
+form .item label {
+    display: block;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table td,
+table th {
+    padding: 4px;
+    border: 1px solid #79d;
+    min-width: 30px;
+}
+
+table th {
+    background: linear-gradient(178deg, #def 0, #bdf 100%);
+    color: #46a;
+}
+
+table tr:nth-child(odd) {
+    background: linear-gradient(to bottom, #fff 0, #def 100%);
+}
+
+table tbody .id {
+    text-align: right;
+}
+
+table .acciones {
+    text-align: center;
+}
+
+table .acciones button {
+    font-size: 10px;
+    padding: 3px 6px;
+    margin: 0 4px 0 0;
+}
+
+table .acciones button:last-child {
+    margin: 0;
+}

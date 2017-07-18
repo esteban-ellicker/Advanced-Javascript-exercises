@@ -1,0 +1,114 @@
+body,
+button {
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+header  {
+    padding: 8px;
+    background: linear-gradient(175deg, #fff 0, #bdf 100%);
+}
+
+button {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #279;
+    background: linear-gradient(160deg, #08c 0, #006 100%);
+    color: #fff;
+}
+
+button:disabled {
+    border: 1px solid #444;
+    background: linear-gradient(160deg, #888 0, #444 100%);
+    color: #ddd;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table td,
+table th {
+    padding: 4px;
+    border: 1px solid #79d;
+    min-width: 80px;
+}
+
+table th {
+    background: linear-gradient(178deg, #fff 0, #bdf 100%);
+    color: #46a;
+}
+
+table tr:nth-child(odd) {
+    background: linear-gradient(to bottom, #fff 0, #def 100%);
+}
+
+.nombre {
+    text-transform: capitalize;
+    min-width: 120px;
+}
+
+.pokemons .acciones {
+    text-align: center;
+}
+
+.pokemons .acciones button {
+    font-size: 10px;
+    padding: 3px 6px;
+}
+
+.contenedor {
+    position: relative;
+    border: 1px solid #79d;
+}
+
+.contenedor:last-child {
+    border-top: none;
+}
+
+.columna {
+    vertical-align: top;
+    position: relative;
+    display: inline-block;
+    border-right: 1px solid #79d;
+    padding: 0 16px 16px;
+}
+
+.columna:last-child {
+    border-right: none;
+}
+
+.etiqueta-valor {
+    padding: 0 8px;
+}
+
+.etiqueta-valor .etiqueta {
+    padding: 0 4px 0 0;
+}
+
+.detalle {
+    display: inline-block;
+    border: 1px solid #79d;
+    min-width: 180px;
+    min-height: 180px;
+    text-align: center;
+}
+
+.detalle .imagen {
+    display: block;
+    min-width: 96px;
+    min-height: 96px;
+}
+
+.detalle .etiqueta-valor {
+    padding: 4px 8px;
+    display: block;
+    text-align: left;
+}
+
+.detalle .etiqueta-valor .etiqueta {
+    display: inline-block;
+    min-width: 55px;
+    color: #46a;
+}

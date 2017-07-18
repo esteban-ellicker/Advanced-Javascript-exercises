@@ -1,0 +1,52 @@
+.circuito {
+    background-color: black;
+    padding: 4px;
+}
+
+.pista {
+    margin: 4px;
+    padding: 4px;
+    border-bottom: 2px dashed yellow;
+}
+
+.pista .posicion {
+    color: white;
+}
+
+.vehiculo {
+    max-width: 150px;
+}
+
+.podio {
+    margin: 4px;
+    padding: 4px;
+}
+
+.podio .vehiculo {
+    max-width: 100px;
+}
+
+.vehiculo-podio {
+    margin: 4px;
+    padding: 4px;
+}
+
+.vehiculo-podio td {
+    font-size: 30px;
+}
+
+.posicion,
+.tiempo,
+.velocidad {
+    text-align: right;
+}
+
+.podio table {
+    border-collapse: collapse;
+}
+
+.podio table td,
+.podio table th {
+    padding: 4px;
+    border: 1px solid silver;
+}

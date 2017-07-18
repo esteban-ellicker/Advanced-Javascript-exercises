@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>007__002</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="main.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="controles">
+        <div class="control" id="control-marca">
+            <label for="marca">Marca</label>
+            <select id="marca" name="marca"></select>
+        </div>
+        <div class="control" id="control-modelo">
+            <label for="modelo">Modelo</label>
+            <select id="modelo" name="modelo"></select>
+        </div>
+        <div class="control" id="control-imagen">
+            <span class="col">
+                <label for="imagen">Imagen</label>
+                <select id="imagen" name="imagen" class="image-select"></select>
+            </span>
+            <span class="col">
+                <img src="" id="src-imagen" class="src-imagen" />
+            </span>
+        </div>
+        <div class="control" id="control-velmax">
+            <label for="velmax">Velocidad Máxima</label>
+            <input type="number" id="velmax" name="velmax" min="100" max="200" class="number" />
+            <input type="checkbox" id="velmax-aleatoria" name="velmax-aleatoria" title="Velocidad Máxima Aleatoria" />
+            <label for="velmax-aleatoria" class="posterior" title="Velocidad Máxima Aleatoria">Aleatoria</label>
+        </div>
+        <div class="control" id="control-aceleracion">
+            <label for="aceleracion">Aceleración</label>
+            <input type="number" id="aceleracion" name="aceleracion" min="5" max="20" class="number" />
+            <input type="checkbox" id="aceleracion-aleatoria" name="aceleracion-aleatoria" title="Aceleración Aleatoria" />
+            <label for="aceleracion-aleatoria" class="posterior" title="Aceleración Aleatoria">Aleatoria</label>
+        </div>
+        <div class="control">
+            <button class="add-button" id="add-button" title="Añadir vehículo a la carrera">🚘 Añadir Vehículo</button>
+        </div>
+        <div class="control">
+            <button class="random-button" id="random-button" title="Definir propiedades del vehículo aleatoriamente">❔ Definir Aleatoriamente</button>
+        </div>
+        <div class="control">
+            <button class="start-button" id="start-button">🚦 Iniciar Carrera</button>
+        </div>
+    </div>
+    <div class="mensajes" id="mensajes">
+    </div>
+    <div class="circuito" id="circuito">
+    </div>
+    <div class="podio" id="podio">
+    </div>
+</body>
+
+</html>

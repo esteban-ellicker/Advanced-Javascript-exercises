@@ -1,0 +1,116 @@
+body,
+label,
+select,
+input,
+textarea,
+button {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+aside {
+    padding: 8px;
+}
+
+select,
+input,
+textarea,
+button {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #279;
+    min-width: 200px;
+    max-width: 300px;
+}
+
+.validado input:invalid {
+    background-color: #ffeeee;
+}
+
+label {
+    padding: 0 0 2px 2px;
+    font-size: 12px;
+    color: #789;
+}
+
+button {
+    background: linear-gradient(to bottom, #3bf 0, #08c 100%);
+    color: #025;
+}
+
+.acciones button {
+    min-width: 100px;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.col {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.col:first-child {
+    background: linear-gradient(to right, #fff 0, #def 100%);
+}
+
+.controles {
+    position: relative;
+}
+
+.control {
+    position: relative;
+    display: block;
+    margin: 0 0 8px 0;
+}
+
+.control label {
+    position: relative;
+    display: block;
+}
+
+.control .number {
+    text-align: right;
+}
+
+.mensajes {
+    display: none;
+    border-radius: 6px;
+    border: 1px solid #c00;
+    color: #800;
+    padding: 16px;
+    margin: 0 0 8px 0;
+    text-align: center;
+    min-width: 200px;
+    max-width: 300px;
+}
+
+.productos {
+    position: relative;
+    padding: 0 8px;
+}
+
+.productos table {
+    border-collapse: collapse;
+}
+
+.productos table td,
+.productos table th {
+    padding: 4px;
+    border: 1px solid #49b;
+    min-width: 100px;
+}
+
+.productos table th {
+    background: linear-gradient(to bottom, #fff 0, #def 100%);
+    color: #789;
+}
+
+.productos .numero {
+    text-align: right;
+}
+
+.productos .imagen {
+    max-width: 80px;
+    max-height: 80px;
+}
