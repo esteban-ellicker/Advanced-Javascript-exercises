@@ -1,0 +1,24 @@
+{
+  "name": "proyecto-esteban",
+  "version": "1.0.0",
+  "description": "Proyecto final curso javascript avanzado",
+  "main": "app/main.js",
+  "config": {
+    "port": "8080"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node serve.js"
+  },
+  "author": "Esteban Ellicker",
+  "license": "ISC",
+  "keywords": [
+    "javascript",
+    "proyecto"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.3",
+    "jquery": "^3.2.1"
+  }
+}
