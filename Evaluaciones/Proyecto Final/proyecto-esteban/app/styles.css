@@ -30,8 +30,21 @@
     margin-right: 0;
 }
 
+.etiqueta {
+	display: inline-block;
+	padding-right: 4px;
+	color: #888899;
+}
+.valor {
+	display: inline-block;
+}
+
 .nombre {
     text-transform: capitalize;
+}
+
+.numero {
+	text-align: right;
 }
 
 .login-container {

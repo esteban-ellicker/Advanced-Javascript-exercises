@@ -53,10 +53,18 @@ class HtmlUtil {
 
         let element = document.createElement(tag);
         for (let key in attr) {
-            element.setAttribute(key, attr[key]);
+            if (attr[key] !== null && attr[key] !== undefined) {
+                element.setAttribute(key, attr[key]);
+            } else {
+                console.error(`El atributo en ${key} es null o undefined`);
+            }
         }
         for (let key in events) {
-            element.addEventListener(key, events[key]);
+            if (typeof events[key] == "function") {
+                element.addEventListener(key, events[key]);
+            } else {
+                console.error(`El evento en ${key} no es function`);
+            }
         }
         if (text !== null) {
             element.appendChild(document.createTextNode(text));
@@ -253,6 +261,50 @@ class HtmlUtil {
             tr.appendChild(td);
         });
         return tr;
+    }
+    static mergeAttributes(...attrs) {
+        let merged = {};
+        attrs.forEach(attr => {
+            if (attr) {
+                for (let key in attr) {
+                    merged[key] = attr[key];
+                }
+            }
+        });
+        return merged;
+    }
+    static createLabelValuePairList({
+        tag = "ul",
+        attr = { "class": "list-group" },
+        pairTag = "li",
+        pairAttr = { "class": "list-group-item etiqueta-valor" },
+        labelTag = "span",
+        labelAttr = { "class": "etiqueta" },
+        valueTag = "span",
+        valueAttr = { "class": "valor" },
+        data = []
+    }) {
+
+        let list = HtmlUtil.createElement({
+            tag: tag,
+            attr: attr
+        });
+
+        data.forEach(item => {
+            let [pair, label, value] = HtmlUtil.createLabelValuePair({
+                tag: data.pairTag || pairTag,
+                attr: HtmlUtil.mergeAttributes(pairAttr, item.pairAttr),
+                labelTag: item.labelTag || labelTag,
+                labelAttr: HtmlUtil.mergeAttributes(labelAttr, item.labelAttr),
+                labelText: item.labelText,
+                valueTag: item.valueTag || valueTag,
+                valueAttr: HtmlUtil.mergeAttributes(valueAttr, item.valueAttr),
+                valueText: item.valueText
+            });
+            list.appendChild(pair);
+        });
+
+        return list;
     }
     static hideElement(element) {
         let style = element.getAttribute("style") || "";
@@ -807,6 +859,153 @@ class PageFragment extends Page {
 
 }
 
+class ModalPage extends PageFragment {
+    constructor(body) {
+        super(body);
+        this.title = "";
+        this.buttons = [];
+        this.content = null;
+    }
+
+    setTitle(title) {
+        this.title = title;
+    }
+
+    addBoton(button) {
+        this.buttons.push(button);
+    }
+
+    setContent(content) {
+        this.content = content;
+    }
+
+    limpiar() {
+        if (this.contenedorModal) {
+            this.contenedorModal.parentElement.removeChild(this.contenedorModal);
+            this.contenedorModal = null;
+        }
+    }
+
+    cerrar() {
+        this.limpiar();
+    }
+
+    pintarEstructura() {
+        this.limpiar();
+
+        /* CONTENEDOR */
+        this.contenedorModal = HtmlUtil.createElement({ tag: "div" });
+
+        let modal = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "modal fade in",
+                "role": "dialog",
+                "style": "display: block"
+            }
+        });
+
+        let modalDialog = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "modal-dialog"
+            }
+        });
+
+        let modalContent = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "modal-content"
+            }
+        });
+
+        /* HEADER */
+        let modalHeader = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "modal-header"
+            }
+        });
+
+        let modalClose = HtmlUtil.createButton({
+            attr: {
+                "class": "close"
+            },
+            click: () => this.limpiar(),
+            text: "(×)"
+        });
+        modalHeader.appendChild(modalClose);
+
+        let modalTitle = HtmlUtil.createElement({
+            tag: "h4",
+            attr: { "class": "modal-title" },
+            text: this.title
+        });
+        modalHeader.appendChild(modalTitle);
+
+        modalContent.appendChild(modalHeader);
+
+        /* BODY */
+        let modalBody = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "modal-body"
+            }
+        });
+        if (this.content) {
+            modalBody.appendChild(this.content);
+        }
+        this.contenedor = modalBody;
+
+        modalContent.appendChild(modalBody);
+
+        /* FOOTER */
+        let modalFooter = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "modal-footer"
+            }
+        });
+        this.buttons.forEach(button => {
+            let buttonElement = HtmlUtil.createButton(button);
+            modalFooter.appendChild(buttonElement);
+        });
+        let buttonClose = HtmlUtil.createButton({
+            attr: {
+                "class": "btn btn-primary"
+            },
+            click: () => this.limpiar(),
+            text: "Cerrar"
+        });
+        modalFooter.appendChild(buttonClose);
+
+        modalContent.appendChild(modalFooter);
+
+        modalDialog.appendChild(modalContent);
+
+        modal.appendChild(modalDialog);
+
+        this.contenedorModal.appendChild(modal);
+
+        let backdrop = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "modal-backdrop fade in"
+            }
+        });
+
+        this.contenedorModal.appendChild(backdrop);
+
+        this.appendChild(this.contenedorModal);
+    }
+
+    pintarPagina() {
+        this.limpiarPagina();
+        this.contenedor.appendChild(this.content);
+    }
+
+}
+
 class InnerPage extends Page {
     constructor(body) {
         super(body);
@@ -853,7 +1052,7 @@ class PageHeader extends PageFragment {
 
         let header = HtmlUtil.createElement({
             tag: "header",
-            attr: { "class": "header" },
+            attr: { "class": "global-header" },
             text: "--- HEADER ---"
         });
 
@@ -908,7 +1107,7 @@ class PageFooter extends PageFragment {
 
         let footer = HtmlUtil.createElement({
             tag: "footer",
-            attr: { "class": "footer" },
+            attr: { "class": "global-footer" },
             text: "--- FOOTER ---"
         });
 
@@ -1077,8 +1276,8 @@ class HomePage extends InnerPage {
 }
 
 class ComidaPage extends InnerPage {
-    constructor() {
-        super();
+    constructor(body) {
+        super(body);
         this.comidas = [];
         this.comidaClient = new ComidaClient();
         this.contenedorLista = null;
@@ -1095,10 +1294,6 @@ class ComidaPage extends InnerPage {
                     this.pintar();
                 }
             );
-    }
-
-    nuevaComida() {
-        console.log("TODO: crear nueva comida");
     }
 
     start() {
@@ -1121,6 +1316,21 @@ class ComidaPage extends InnerPage {
         contenedorHead.appendChild(titulo);
         this.contenedor.appendChild(contenedorHead);
 
+        /* LISTA */
+        this.contenedorLista = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": "lista" }
+        });
+        this.contenedor.appendChild(this.contenedorLista);
+
+
+        /* FOOTER */
+        let contenedorFooter = HtmlUtil.createElement({
+            tag: "footer",
+            attr: { "class": "page-footer" }
+        });
+        this.contenedor.appendChild(contenedorFooter);
+
         /* NAV */
         let contenedorNav = HtmlUtil.createElement({
             tag: "div",
@@ -1135,31 +1345,12 @@ class ComidaPage extends InnerPage {
 
         this.buttonCrear = HtmlUtil.createButton({
             text: "Crear comida",
-            click: () => this.nuevaComida(0)
+            click: () => this.nuevaComida()
         });
         contenedorNav.appendChild(this.buttonCrear);
 
-        contenedorHead.appendChild(contenedorNav);
-
-        /* LISTA */
-        this.contenedorLista = HtmlUtil.createElement({
-            tag: "div",
-            attr: { "class": "lista" }
-        });
-        this.contenedor.appendChild(this.contenedorLista);
-
-        /* MODAL */
-        let [modal, modalTitle, modalBody, modalClose] = HtmlUtil.createModal({
-            id: "modal-detalle",
-            title: "Detalle de Comida",
-            buttons: [{
-                type: "close",
-                text: "Cerrar"
-            }]
-        });
-        this.modalDetalle = modalBody;
-
-        this.appendChild(modal);
+        contenedorFooter.appendChild(contenedorNav);
+        this.contenedor.appendChild(contenedorFooter);
     }
 
     pintarPagina() {
@@ -1193,7 +1384,26 @@ class ComidaPage extends InnerPage {
                     attr: { "class": "numero" }
                 }
             ]);
-            //TODO: tr.appendChild(tdAcciones);
+            let tdAcciones = HtmlUtil.createElement({
+                tag: "td",
+                attr: { "class": "acciones" }
+            });
+
+            let buttonEditar = HtmlUtil.createButton({
+                attr: { "class": "btn btn-xs btn-primary" },
+                text: "Editar",
+                click: () => this.editar(comida)
+            });
+            tdAcciones.appendChild(buttonEditar);
+
+            let buttonDetalle = HtmlUtil.createButton({
+                attr: { "class": "btn btn-xs btn-info" },
+                text: "Ver Detalles",
+                click: () => this.pintarDetalle(comida)
+            });
+            tdAcciones.appendChild(buttonDetalle);
+
+            tr.appendChild(tdAcciones);
             tbody.appendChild(tr);
         });
         table.appendChild(tbody);
@@ -1203,15 +1413,174 @@ class ComidaPage extends InnerPage {
         this.hideLoader();
     }
 
-    pintarDetalle(detallePokemon, contenedorDetalle = this.contenedorDetalle) {
-        HtmlUtil.removeChilds(contenedorDetalle);
+    pintarDetalle(comida) {
+        let pageDetalle = new DetalleComidaPage(this.body, comida);
+        window.pageDetalle = pageDetalle;
+        pageDetalle.pintar();
+    }
 
-        detallePokemon.pintar(contenedorDetalle);
+    editar(comida) {
+        let pageEditar = new FormComidaPage(this.body, comida, this);
+        window.pageEditar = pageEditar;
+        pageEditar.pintar();
+    }
 
-        this.hideLoader();
+    nuevaComida() {
+        this.editar(new Comida());
     }
 }
 
+class DetalleComidaPage extends ModalPage {
+    constructor(body, comida) {
+        super(body);
+        this.comida = comida;
+        this.setTitle("Detalle Comida");
+    }
+
+    pintarPagina() {
+        let content = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": "detalle" }
+        });
+
+        let lista = HtmlUtil.createLabelValuePairList({
+            data: [{
+                labelText: "ID: ",
+                valueText: this.comida._id
+            }, {
+                labelText: "Nombre: ",
+                valueText: this.comida.nombre
+            }, {
+                labelText: "Tipo: ",
+                valueText: this.comida.tipo
+            }, {
+                labelText: "Precio: ",
+                valueText: this.comida.precio
+            }, {
+                labelText: "Calorias: ",
+                valueText: this.comida.calorias
+            }, {
+                labelText: "Existencias: ",
+                valueText: this.comida.existencias
+            }, {
+                labelText: "V: ",
+                valueText: this.comida.__v
+            }]
+        });
+
+        content.appendChild(lista);
+
+        super.setContent(content);
+        super.pintarPagina();
+    }
+}
+
+class FormComidaPage extends ModalPage {
+    constructor(body, comida, comidaPage) {
+        super(body);
+        this.comida = comida;
+        this.comidaPage = comidaPage;
+        this.setTitle(this.comida._id ? "Editar Comida" : "Crear Comida");
+        this.addBoton({
+            attr: { "class": "btn btn-primary" },
+            text: "Guardar",
+            click: () => this.guardar(comida)
+        });
+        this.form = null;
+    }
+
+    guardar() {
+        if (this.form.checkValidity()) {
+            this.comidaPage.showLoader();
+
+            this.comida.nombre = this.form.nombre.value;
+            this.comida.tipo = this.form.tipo.value;
+            this.comida.precio = this.form.precio.value;
+            this.comida.calorias = this.form.calorias.value;
+            this.comida.existencias = this.form.existencias.value;
+
+            let promise = this.comida._id ?
+                this.comidaPage.comidaClient.put(this.comida) :
+                this.comidaPage.comidaClient.post(this.comida);
+
+            promise.then(data => {
+                    console.log(data);
+                    this.comidaPage.getComidas();
+                    this.cerrar();
+                })
+                .catch(data => {
+                    //TODO: mostar error
+                    console.log(data);
+                });
+        }
+    }
+
+    pintarPagina() {
+        let content = HtmlUtil.createElement({
+            tag: "form",
+            attr: { "class": "editar" }
+        });
+        this.form = content;
+
+        let lista = HtmlUtil.createLabelValuePairList({
+            labelTag: "label",
+            valueTag: "input",
+            data: [{
+                labelText: "ID: ",
+                valueTag: "span",
+                valueText: this.comida._id
+            }, {
+                labelText: "Nombre: ",
+                valueAttr: {
+                    "name": "nombre",
+                    "value": this.comida.nombre
+                }
+            }, {
+                labelText: "Tipo: ",
+                valueAttr: {
+                    "name": "tipo",
+                    "value": this.comida.tipo
+                }
+            }, {
+                labelText: "Precio: ",
+                valueAttr: {
+                    "name": "precio",
+                    "type": "number",
+                    "min": 0,
+                    "max": 10000,
+                    "value": this.comida.precio
+                }
+            }, {
+                labelText: "Calorias: ",
+                valueAttr: {
+                    "name": "calorias",
+                    "type": "number",
+                    "min": 0,
+                    "max": 10000,
+                    "value": this.comida.calorias
+                }
+            }, {
+                labelText: "Existencias: ",
+                valueAttr: {
+                    "name": "existencias",
+                    "type": "number",
+                    "min": 0,
+                    "max": 10000,
+                    "value": this.comida.existencias
+                }
+            }, {
+                labelText: "V: ",
+                valueTag: "span",
+                valueText: this.comida.__v
+            }]
+        });
+
+        content.appendChild(lista);
+
+        super.setContent(content);
+        super.pintarPagina();
+    }
+}
 
 /* ***** CLASES DE DATOS ***** */
 
