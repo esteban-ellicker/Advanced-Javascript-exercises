@@ -1,18 +1,3 @@
-/*
-
-
-Nuestras páginas necesitarán acceder a APIS o realizar una navegación por la App. Por lo que se puede decir que tienen dependencias externas.
-Haz que estas dos dependencias sean inyectadas en la construcción de nuestras páginas.
-
-2. Crear Cuenta de Usuario: En esta página podremos crear una cuenta de usuario. Deberá haber un formulario con todos los datos necesarios para la creación de un usuario.
-
-3. Home: Por ahora será simplemente una página de bienvenida. --> Resumen de comidas y bebidas
-
-6. Perfil de usuario: En esta página se mostrarán los datos del usuario y se permitirá modificarlos o incluso borrar el usuario.
-
-*/
-
-
 /* ***** PAGINAS ESPECIFICAS DE USO COMPARTIDO ***** */
 
 class PageHeader extends PageFragment {
@@ -161,6 +146,15 @@ class LoginPage extends Page {
             })
         );
 
+        this.loginForm.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "recordar",
+                type: "checkbox",
+                label: " Recordar",
+                value: "1"
+            })
+        );
+
         let button = HtmlUtil.createButton({
             text: "Login",
             click: () => this.doLogin(),
@@ -184,7 +178,8 @@ class LoginPage extends Page {
             this.showLoader();
             let username = this.loginForm.username.value;
             let password = this.loginForm.password.value;
-            this.navigator.login(username, password)
+            let recordar = this.loginForm.recordar.checked;
+            this.navigator.login(username, password, recordar)
                 .then(ok => {
                     if (ok) {
                         console.log("¡¡¡Login Ok!!!");
@@ -297,13 +292,13 @@ class AuthController {
         this.publicPages = [];
     }
 
-    login(username, password) {
+    login(username, password, recordar) {
         this.logout();
         return this.loginClient.login(username, password)
             .then(authUser => {
                 let result = false;
                 if (authUser) {
-                    SessionAPI.setUser(authUser);
+                    SessionAPI.setUser(authUser, recordar);
                     result = true;
                 }
                 return result;
@@ -355,8 +350,8 @@ class NavigationController {
     navigateToHome() {
         this.navigateToUrl(this.homePage);
     }
-    login(username, password) {
-        return this.authController.login(username, password);
+    login(username, password, recordar) {
+        return this.authController.login(username, password, recordar);
     }
     logout() {
         return this.authController.logout();

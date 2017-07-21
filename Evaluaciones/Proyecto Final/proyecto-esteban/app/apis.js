@@ -194,25 +194,32 @@ class StorageListAPI {
 class SessionAPI {
 
     static getUser() {
-        let json = sessionStorage.getItem("user");
+        let json = sessionStorage.getItem("user") || localStorage.getItem("user");
         let data = JSON.parse(json);
         return data !== null ? new User(
             data._id,
             data.username,
             data.nombre,
-            data.rol
+            data.apellidos,
+            data.email,
+            data.__v
         ) : null;
     }
 
-    static setUser(user) {
+    static setUser(user, recordar) {
         let data = {
             _id: user._id,
             username: user.username,
             nombre: user.nombre,
-            rol: user.rol
+            apellidos: user.apellidos,
+            email: user.email,
+            __v: user.__v
         };
         let json = JSON.stringify(data);
         sessionStorage.setItem("user", json);
+        if (recordar) {
+            localStorage.setItem("user", json);
+        }
     }
 
     static getItem(key, defaultValue) {
@@ -236,5 +243,6 @@ class SessionAPI {
 
     static clear() {
         sessionStorage.clear();
+        localStorage.removeItem("user");
     }
 }

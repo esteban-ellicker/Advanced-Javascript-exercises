@@ -294,7 +294,9 @@ class HtmlUtil {
                 break;
             case "radio":
             case "checkbox":
-                fieldCol.appendChild(
+                fieldCol = null;
+                groupLabel.setAttribute("class", "col-sm-12 form-check-label");
+                groupLabel.insertBefore(
                     HtmlUtil.createElement({
                         tag: "input",
                         attr: {
@@ -304,29 +306,12 @@ class HtmlUtil {
                             "id": id,
                             "value": value,
                             "required": required,
-                            "autofocus": autofocus
+                            "checked": checked
                         },
                         events: events
-                    })
+                    }),
+                    groupLabel.firstChild
                 );
-                // fieldCol = null;
-                // groupLabel.setAttribute("class", "col-sm-12 form-check-label");
-                // groupLabel.insertBefore(
-                //     HtmlUtil.createElement({
-                //         tag: "input",
-                //         attr: {
-                //             "class": "form-check-input",
-                //             "type": type,
-                //             "name": id,
-                //             "id": id,
-                //             "value": value,
-                //             "required": required,
-                //             "checked": checked
-                //         },
-                //         events: events
-                //     }),
-                //     groupLabel.firstChild
-                // );
                 break;
             case "static":
                 fieldCol.appendChild(
