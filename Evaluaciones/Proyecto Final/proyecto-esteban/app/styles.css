@@ -1,3 +1,23 @@
+input {
+    border: 1px solid #279;
+    border-radius: 4px;
+    line-height: 20px;
+    font-size: 16px;
+    padding: 6px 8px;
+    width: 100%;
+}
+
+input:valid {
+    border: 1px solid green;
+    background-color: #eeffee;
+}
+
+input:invalid,
+.invalid {
+    border: 1px solid red;
+    background-color: #ffeeee;
+}
+
 .error {
     border: 1px solid red;
     background-color: #ffeeee;
@@ -12,6 +32,26 @@
 .error:before {
     content: "❌";
     padding-right: 16px;
+}
+
+.ok {
+    border: 1px solid green;
+    background-color: #eeffee;
+    border-radius: 4px;
+    line-height: 20px;
+    font-size: 16px;
+    padding: 16px;
+    width: 100%;
+    color: #00bb00;
+}
+
+.ok:before {
+    content: "✔";
+    padding-right: 16px;
+}
+
+.lista .mensaje-temp {
+    margin-bottom: 20px;
 }
 
 .controles button {
@@ -31,12 +71,13 @@
 }
 
 .etiqueta {
-	display: inline-block;
-	padding-right: 4px;
-	color: #888899;
+    display: inline-block;
+    padding-right: 4px;
+    color: #888899;
 }
+
 .valor {
-	display: inline-block;
+    display: inline-block;
 }
 
 .nombre {
@@ -44,7 +85,7 @@
 }
 
 .numero {
-	text-align: right;
+    text-align: right;
 }
 
 .login-container {
@@ -68,28 +109,7 @@
 }
 
 .login .etiqueta {
-    color: #aaaaaa;
     display: block;
-}
-
-.login .valor {
-    border: 1px solid #279;
-    border-radius: 4px;
-    line-height: 20px;
-    font-size: 16px;
-    padding: 6px 8px;
-    width: 100%;
-}
-
-.login .valor:valid {
-    border: 1px solid green;
-    background-color: #eeffee;
-}
-
-.login .valor:invalid,
-.login .invalid {
-    border: 1px solid red;
-    background-color: #ffeeee;
 }
 
 .login .error {
