@@ -127,8 +127,9 @@ class LoginPage extends Page {
                 label: "Usuario:",
                 value: "",
                 placeholder: "Nombre de usuario",
-                pattern: ".{4,20}",
                 events: { "focus": focusHandler },
+                minlength: 4,
+                maxlength: 100,
                 required: true
             })
         );
@@ -140,8 +141,9 @@ class LoginPage extends Page {
                 label: "Contraseña:",
                 value: "",
                 placeholder: "Contraseña de usuario",
-                pattern: ".{4,20}",
                 events: { "focus": focusHandler },
+                minlength: 4,
+                maxlength: 100,
                 required: true
             })
         );

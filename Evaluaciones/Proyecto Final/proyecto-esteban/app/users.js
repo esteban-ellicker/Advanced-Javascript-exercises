@@ -510,6 +510,8 @@ class FormUserPage extends DetalleUserPage {
                 type: "text",
                 label: "Nombre Usuario:",
                 value: this.user.username,
+                minlength: 4,
+                maxlength: 100,
                 required: true,
                 labelCols: 3
             })
@@ -522,6 +524,8 @@ class FormUserPage extends DetalleUserPage {
                     type: "password",
                     label: "Contraseña:",
                     value: this.user.password,
+                    minlength: 4,
+                    maxlength: 100,
                     required: true,
                     labelCols: 3
                 })
@@ -534,6 +538,8 @@ class FormUserPage extends DetalleUserPage {
                 type: "text",
                 label: "Nombre:",
                 value: this.user.nombre,
+                minlength: 4,
+                maxlength: 100,
                 required: true,
                 labelCols: 3
             })
@@ -545,6 +551,8 @@ class FormUserPage extends DetalleUserPage {
                 type: "text",
                 label: "Apellidos:",
                 value: this.user.apellidos,
+                minlength: 4,
+                maxlength: 100,
                 required: true,
                 labelCols: 3
             })
@@ -556,6 +564,8 @@ class FormUserPage extends DetalleUserPage {
                 type: "email",
                 label: "Correo Electrónico:",
                 value: this.user.email,
+                minlength: 4,
+                maxlength: 100,
                 required: true,
                 labelCols: 3
             })
@@ -579,6 +589,8 @@ class FormUserPage extends DetalleUserPage {
                     type: "password",
                     label: "Contraseña actual:",
                     value: this.user.password,
+                    minlength: 4,
+                    maxlength: 100,
                     required: true,
                     labelCols: 3
                 })

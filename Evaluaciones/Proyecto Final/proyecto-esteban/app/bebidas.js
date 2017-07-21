@@ -510,6 +510,8 @@ class FormBebidaPage extends DetalleBebidaPage {
                 type: "text",
                 label: "Nombre:",
                 value: this.bebida.nombre,
+                minlength: 4,
+                maxlength: 100,
                 required: true,
                 labelCols: 3
             })
@@ -559,7 +561,7 @@ class FormBebidaPage extends DetalleBebidaPage {
                 label: "Calorias:",
                 value: this.bebida.calorias,
                 min: 0,
-                max: 10000,
+                max: 5000,
                 required: true,
                 labelCols: 3
             })
@@ -572,7 +574,7 @@ class FormBebidaPage extends DetalleBebidaPage {
                 label: "Existencias:",
                 value: this.bebida.existencias,
                 min: 0,
-                max: 10000,
+                max: 1000,
                 required: true,
                 labelCols: 3
             })

@@ -488,6 +488,8 @@ class FormComidaPage extends DetalleComidaPage {
                 type: "text",
                 label: "Nombre:",
                 value: this.comida.nombre,
+                minlength: 4,
+                maxlength: 100,
                 required: true
             })
         );
@@ -521,7 +523,7 @@ class FormComidaPage extends DetalleComidaPage {
                 label: "Calorias:",
                 value: this.comida.calorias,
                 min: 0,
-                max: 10000,
+                max: 5000,
                 required: true
             })
         );
@@ -533,7 +535,7 @@ class FormComidaPage extends DetalleComidaPage {
                 label: "Existencias:",
                 value: this.comida.existencias,
                 min: 0,
-                max: 10000,
+                max: 1000,
                 required: true
             })
         );
