@@ -244,16 +244,16 @@ class BebidaPage extends InnerPage {
                 bebida.nombre,
                 {
                     text: bebida.esAlcoholica ? bebida.grados + "°" : "N/A",
-                    attr: { "class": bebida.esAlcoholica ? "numero" : "no-aplica" }
+                    attr: { "class": bebida.esAlcoholica ? "number" : "no-aplica" }
                 }, {
                     text: this.formatCurrency(bebida.precio),
-                    attr: { "class": "numero" }
+                    attr: { "class": "number" }
                 }, {
                     text: this.formatNumber(bebida.calorias),
-                    attr: { "class": "numero" }
+                    attr: { "class": "number" }
                 }, {
                     text: this.formatNumber(bebida.existencias),
-                    attr: { "class": "numero" }
+                    attr: { "class": "number" }
                 }
             ]);
             let tdAcciones = HtmlUtil.createElement({
@@ -344,53 +344,81 @@ class DetalleBebidaPage extends ModalPage {
             attr: { "class": "detalle" }
         });
 
-        let campos = [];
-
         if (this.bebida._id) {
-            campos.push({
-                labelText: "ID: ",
-                valueText: this.bebida._id
-            });
-        }
-        campos.push({
-            labelText: "Nombre: ",
-            valueText: this.bebida.nombre
-        });
-        campos.push({
-            labelText: "Contiene Alcohol: ",
-            valueText: this.bebida.esAlcoholica ? "Si" : "No",
-            valueAttr: { "class": this.bebida.esAlcoholica ? "si" : "no" }
-        });
-        campos.push({
-            labelText: "Grados: ",
-            valueText: this.bebida.grados + "°"
-        });
-        campos.push({
-            labelText: "Precio: ",
-            valueText: this.formatCurrency(this.bebida.precio)
-        });
-        campos.push({
-            labelText: "Calorias: ",
-            valueText: this.formatNumber(this.bebida.calorias)
-        });
-        campos.push({
-            labelText: "Existencias: ",
-            valueText: this.formatNumber(this.bebida.existencias)
-        });
-        if (this.bebida._id) {
-            campos.push({
-                labelText: "V: ",
-                valueText: this.bebida.__v
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "ID:",
+                    value: this.bebida._id,
+                    labelCols: 3
+                })
+            );
         }
 
-        let lista = HtmlUtil.createLabelValuePairList({
-            labelTag: "span",
-            valueTag: "span",
-            data: campos
-        });
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Nombre:",
+                value: this.bebida.nombre,
+                labelCols: 3
+            })
+        );
 
-        content.appendChild(lista);
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Contiene Alcohol:",
+                value: this.bebida.esAlcoholica ? "Si" : "No",
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Grados:",
+                value: this.bebida.grados + "°",
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Precio:",
+                value: this.bebida.precio,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Calorias:",
+                value: this.bebida.calorias,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Existencias:",
+                value: this.bebida.existencias,
+                labelCols: 3
+            })
+        );
+
+        if (this.bebida._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "V:",
+                    value: this.bebida.__v,
+                    labelCols: 3
+                })
+            );
+        }
 
         super.setContent(content);
     }
@@ -465,90 +493,101 @@ class FormBebidaPage extends DetalleBebidaPage {
         });
         this.form = content;
 
-        let campos = [];
-
         if (this.bebida._id) {
-            campos.push({
-                labelText: "ID: ",
-                valueTag: "span",
-                valueText: this.bebida._id
-            });
-        }
-        campos.push({
-            labelText: "Nombre: ",
-            valueAttr: {
-                "name": "nombre",
-                "type": "text",
-                "value": this.bebida.nombre
-            }
-        });
-        campos.push({
-            labelText: "Contiene Alcohol: ",
-            valueAttr: {
-                "name": "esAlcoholica",
-                "type": "text",
-                "value": this.bebida.esAlcoholica
-            }
-        });
-        campos.push({
-            labelText: "Grados: ",
-            valueAttr: {
-                "name": "grados",
-                "type": "text",
-                "value": this.bebida.grados
-            }
-        });
-        campos.push({
-            labelText: "Precio: ",
-            valueAttr: {
-                "name": "precio",
-                "type": "number",
-                "class": "numero",
-                "min": 0,
-                "max": 10000,
-                "value": this.bebida.precio
-            }
-        });
-        campos.push({
-            labelText: "Calorias: ",
-            valueAttr: {
-                "name": "calorias",
-                "type": "number",
-                "class": "numero",
-                "min": 0,
-                "max": 10000,
-                "value": this.bebida.calorias
-            }
-        });
-        campos.push({
-            labelText: "Existencias: ",
-            valueAttr: {
-                "name": "existencias",
-                "type": "number",
-                "class": "numero",
-                "min": 0,
-                "max": 10000,
-                "value": this.bebida.existencias
-            }
-        });
-        if (this.bebida._id) {
-            campos.push({
-                labelText: "V: ",
-                valueTag: "span",
-                valueText: this.bebida.__v
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "ID:",
+                    value: this.bebida._id,
+                    labelCols: 3
+                })
+            );
         }
 
-        let lista = HtmlUtil.createLabelValuePairList({
-            labelTag: "label",
-            valueTag: "input",
-            valueAttr: {
-                "required": true
-            },
-            data: campos
-        });
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "nombre",
+                type: "text",
+                label: "Nombre:",
+                value: this.bebida.nombre,
+                required: true,
+                labelCols: 3
+            })
+        );
 
-        content.appendChild(lista);
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "esAlcoholica",
+                type: "select",
+                label: "Contiene Alcohol:",
+                value: this.bebida.esAlcoholica,
+                options: [{ value: true, text: "Si" }, { value: false, text: "No" }],
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "grados",
+                type: "number",
+                label: "Grados:",
+                value: this.bebida.grados,
+                min: 0,
+                max: 100,
+                required: true,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "precio",
+                type: "number",
+                label: "Precio:",
+                value: this.bebida.precio,
+                min: 0,
+                max: 10000,
+                required: true,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "calorias",
+                type: "number",
+                label: "Calorias:",
+                value: this.bebida.calorias,
+                min: 0,
+                max: 10000,
+                required: true,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "existencias",
+                type: "number",
+                label: "Existencias:",
+                value: this.bebida.existencias,
+                min: 0,
+                max: 10000,
+                required: true,
+                labelCols: 3
+            })
+        );
+
+        if (this.bebida._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "V:",
+                    value: this.bebida.__v,
+                    labelCols: 3
+                })
+            );
+        }
 
         super.setContent(content);
     }
@@ -589,5 +628,192 @@ class EliminarBebidaPage extends DetalleBebidaPage {
                 this.pintarError(data.message);
                 this.hideLoader();
             });
+    }
+}
+
+class ResumenBebidaPage extends PageFragment {
+    constructor(body) {
+        super(body);
+        this.bebidaClient = new BebidaClient();
+        this.resumen = null;
+    }
+
+    getResumen() {
+        this.showLoader();
+        this.bebidaClient.get()
+            .then(
+                lista => {
+                    this.resumen = {
+                        total: lista.length,
+                        true: 0,
+                        false: 0
+                    }
+                    if (lista.length) {
+
+                        this.resumen = lista.reduce(
+                            (result, bebida) => {
+                                result[bebida.esAlcoholica]++;
+                                return result;
+                            },
+                            this.resumen
+                        );
+
+                        lista.sort((a, b) => a.calorias - b.calorias);
+                        this.resumen.minCalorias = lista[0];
+                        this.resumen.maxCalorias = lista[lista.length - 1];
+
+                        lista.sort((a, b) => a.precio - b.precio);
+                        this.resumen.minPrecio = lista[0];
+                        this.resumen.maxPrecio = lista[lista.length - 1];
+
+                        lista.sort((a, b) => a.existencias - b.existencias);
+                        this.resumen.minExistencias = lista[0];
+                        this.resumen.maxExistencias = lista[lista.length - 1];
+
+                        lista.sort((a, b) => a.grados - b.grados);
+                        this.resumen.minGrados = lista.find(bebida => bebida.esAlcoholica);
+                        this.resumen.maxGrados = lista[lista.length - 1];
+                    }
+
+                    console.log(this.resumen);
+
+                    this.pintarPagina();
+                    this.hideLoader();
+                }
+            );
+    }
+
+    pintarEstructura() {
+        /* CONTENEDOR */
+        this.contenedor = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": "resumen-container col-sm-12 col-md-6" }
+        });
+        this.appendChild(this.contenedor);
+    }
+
+    pintarPagina() {
+        let content = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "resumen-content"
+            }
+        });
+        let titulo = HtmlUtil.createElement({
+            tag: "h3",
+            text: "Resumen Bebidas"
+        });
+        content.appendChild(titulo);
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Total:",
+                value: this.resumen.total
+            })
+        );
+
+        if (this.resumen.total) {
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Alcoholicas:",
+                    value: this.resumen[true],
+                    labelCols: 3
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "No Alcoholicas:",
+                    value: this.resumen[false],
+                    labelCols: 3
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Mayor Precio:",
+                    value: `${this.resumen.maxPrecio.nombre}: ${this.formatCurrency(this.resumen.maxPrecio.precio)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Menor Precio:",
+                    value: `${this.resumen.minPrecio.nombre}: ${this.formatCurrency(this.resumen.minPrecio.precio)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Más Calorias:",
+                    value: `${this.resumen.maxCalorias.nombre}: ${this.formatNumber(this.resumen.maxCalorias.calorias)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Menos Calorias:",
+                    value: `${this.resumen.minCalorias.nombre}: ${this.formatNumber(this.resumen.minCalorias.calorias)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Más Existencias:",
+                    value: `${this.resumen.maxExistencias.nombre}: ${this.formatNumber(this.resumen.maxExistencias.existencias)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Menos Existencias:",
+                    value: `${this.resumen.minExistencias.nombre}: ${this.formatNumber(this.resumen.minExistencias.existencias)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Mayor Grado Alcoholico:",
+                    value: `${this.resumen.maxGrados.nombre}: ${this.resumen.maxGrados.grados}°`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Menor Grado Alcoholico:",
+                    value: `${this.resumen.minGrados.nombre}: ${this.resumen.minGrados.grados}°`,
+                    labelCols: 4
+                })
+            );
+
+        }
+
+        this.contenedor.appendChild(content);
+    }
+
+    pintar() {
+        if (!this.contenedor) {
+            this.pintarEstructura();
+        }
+        this.getResumen();
     }
 }

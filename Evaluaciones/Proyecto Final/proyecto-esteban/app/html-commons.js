@@ -9,28 +9,35 @@ class HtmlUtil {
     static createText(text) {
         return document.createTextNode(text);
     }
+    static setAttributes(element, attributes) {
+        for (let key in attributes) {
+            if (attributes[key] !== null && attributes[key] !== undefined) {
+                if (attributes[key] || key != "checked" && key != "readonly" && key != "disabled" && key != "required") {
+                    element.setAttribute(key, attributes[key]);
+                }
+            } else {
+                console.warn(`Ignorando atributo ${key}, su valor es null o undefined`);
+            }
+        }
+    }
+    static addEventListeners(element, listeners) {
+        for (let key in listeners) {
+            if (typeof listeners[key] == "function") {
+                element.addEventListener(key, listeners[key]);
+            } else {
+                throw new Error(`El evento en ${key} no es de tipo function`);
+            }
+        }
+    }
     static createElement({
         tag,
         text = null,
         attr = {},
         events = {}
     }) {
-
         let element = document.createElement(tag);
-        for (let key in attr) {
-            if (attr[key] !== null && attr[key] !== undefined) {
-                element.setAttribute(key, attr[key]);
-            } else {
-                console.warn(`Ignorando atributo ${key}, su valor null o undefined`);
-            }
-        }
-        for (let key in events) {
-            if (typeof events[key] == "function") {
-                element.addEventListener(key, events[key]);
-            } else {
-                throw new Error(`El evento en ${key} no es function`);
-            }
-        }
+        HtmlUtil.setAttributes(element, attr);
+        HtmlUtil.addEventListeners(element, events);
         if (text !== null) {
             element.appendChild(document.createTextNode(text));
         }
@@ -52,6 +59,17 @@ class HtmlUtil {
             elements.push(childElement);
         }
         return elements;
+    }
+    static mergeAttributes(...attrs) {
+        let merged = {};
+        attrs.forEach(attr => {
+            if (attr) {
+                for (let key in attr) {
+                    merged[key] = attr[key];
+                }
+            }
+        });
+        return merged;
     }
     static createButton({
         text,
@@ -137,17 +155,6 @@ class HtmlUtil {
         });
         return tr;
     }
-    static mergeAttributes(...attrs) {
-        let merged = {};
-        attrs.forEach(attr => {
-            if (attr) {
-                for (let key in attr) {
-                    merged[key] = attr[key];
-                }
-            }
-        });
-        return merged;
-    }
     static createLabelValuePairList({
         tag = "ul",
         attr = { "class": "list-group" },
@@ -182,14 +189,182 @@ class HtmlUtil {
         return list;
     }
     static hideElement(element) {
-        let style = element.getAttribute("style") || "";
-        style = "display:none;" + style;
-        element.setAttribute("style", style);
+        element.style.display = "none";
     }
     static showElement(element) {
-        let style = element.getAttribute("style") || "";
-        style = style.replace(/display\s*:\s*none;?/g, "");
-        element.setAttribute("style", style);
+        element.style.display = "";
+    }
+    static createFormGroup({
+        id,
+        label = "",
+        value = "",
+        type = "text",
+        placeholder,
+        helpText,
+        pattern,
+        required,
+        checked,
+        min,
+        max,
+        minlength,
+        maxlength,
+        autofocus,
+        events = {},
+        options = [],
+        labelCols = 2
+    }) {
+        let fieldCols = 12 - labelCols;
+        let formGroup = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": "form-group row" }
+        });
+
+        let groupLabel = HtmlUtil.createElement({
+            tag: "label",
+            attr: {
+                "class": `col-sm-${labelCols} col-form-label fixed-label`,
+                "for": id
+            },
+            text: label
+        });
+        formGroup.appendChild(groupLabel);
+
+        let fieldCol = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": `col-sm-${fieldCols}` }
+        });
+
+        switch (type) {
+            case "text":
+            case "password":
+            case "color":
+            case "date":
+            case "datetime-local":
+            case "email":
+            case "month":
+            case "number":
+            case "range":
+            case "search":
+            case "tel":
+            case "time":
+            case "url":
+            case "week":
+                fieldCol.appendChild(
+                    HtmlUtil.createElement({
+                        tag: "input",
+                        attr: {
+                            "class": "form-control " + type,
+                            "type": type,
+                            "name": id,
+                            "id": id,
+                            "value": value,
+                            "placeholder": placeholder,
+                            "pattern": pattern,
+                            "required": required,
+                            "autofocus": autofocus,
+                            "min": min,
+                            "max": max,
+                            "minlength": minlength,
+                            "maxlength": maxlength
+                        },
+                        events: events
+                    })
+                );
+                break;
+            case "select":
+                let [select] = HtmlUtil.createElementWithChildren({
+                    tag: "select",
+                    attr: {
+                        "class": "form-control",
+                        "name": id,
+                        "id": id,
+                        "value": value,
+                        "required": required,
+                        "autofocus": autofocus
+                    },
+                    events: events,
+                    children: options.map(item => ({
+                        tag: "option",
+                        attr: { value: item.value != undefined ? item.value : item },
+                        text: item.text != undefined ? item.text : item
+                    }))
+                });
+                select.value = value;
+                fieldCol.appendChild(select);
+                break;
+            case "radio":
+            case "checkbox":
+                fieldCol.appendChild(
+                    HtmlUtil.createElement({
+                        tag: "input",
+                        attr: {
+                            "class": "form-check-input",
+                            "type": type,
+                            "name": id,
+                            "id": id,
+                            "value": value,
+                            "required": required,
+                            "autofocus": autofocus
+                        },
+                        events: events
+                    })
+                );
+                // fieldCol = null;
+                // groupLabel.setAttribute("class", "col-sm-12 form-check-label");
+                // groupLabel.insertBefore(
+                //     HtmlUtil.createElement({
+                //         tag: "input",
+                //         attr: {
+                //             "class": "form-check-input",
+                //             "type": type,
+                //             "name": id,
+                //             "id": id,
+                //             "value": value,
+                //             "required": required,
+                //             "checked": checked
+                //         },
+                //         events: events
+                //     }),
+                //     groupLabel.firstChild
+                // );
+                break;
+            case "static":
+                fieldCol.appendChild(
+                    HtmlUtil.createElement({
+                        tag: "p",
+                        attr: { "class": "form-control-static readonly-field" },
+                        text: value
+                    })
+                );
+                break;
+            default:
+                fieldCol.appendChild(
+                    HtmlUtil.createElement({
+                        tag: "span",
+                        text: value
+                    })
+                );
+
+        }
+
+        if (helpText) {
+            fieldCol.appendChild(
+                HtmlUtil.createElement({
+                    tag: "small",
+                    attr: {
+                        "class": "form-text text-muted"
+                    },
+                    text: helpText
+                })
+            );
+        }
+
+        if (fieldCol) {
+            formGroup.appendChild(fieldCol);
+        }
+
+
+        return formGroup;
     }
 }
 

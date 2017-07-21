@@ -1,3 +1,18 @@
+/*
+
+
+Nuestras páginas necesitarán acceder a APIS o realizar una navegación por la App. Por lo que se puede decir que tienen dependencias externas.
+Haz que estas dos dependencias sean inyectadas en la construcción de nuestras páginas.
+
+2. Crear Cuenta de Usuario: En esta página podremos crear una cuenta de usuario. Deberá haber un formulario con todos los datos necesarios para la creación de un usuario.
+
+3. Home: Por ahora será simplemente una página de bienvenida. --> Resumen de comidas y bebidas
+
+6. Perfil de usuario: En esta página se mostrarán los datos del usuario y se permitirá modificarlos o incluso borrar el usuario.
+
+*/
+
+
 /* ***** PAGINAS ESPECIFICAS DE USO COMPARTIDO ***** */
 
 class PageHeader extends PageFragment {
@@ -9,10 +24,14 @@ class PageHeader extends PageFragment {
 
         this.limpiarPagina();
 
-        let header = HtmlUtil.createElement({
+        let [header] = HtmlUtil.createElementWithChildren({
             tag: "header",
             attr: { "class": "global-header" },
-            text: "--- HEADER ---"
+            children: [{
+                tag: "h1",
+                attr: { "class": "global-title" },
+                text: "Proyecto Final Javascript Avanzado"
+            }]
         });
 
         if (this.navigator && this.navigator.pages) {
@@ -67,7 +86,7 @@ class PageFooter extends PageFragment {
         let footer = HtmlUtil.createElement({
             tag: "footer",
             attr: { "class": "global-footer" },
-            text: "--- FOOTER ---"
+            text: "Ⓒ Esteban Ellicker 2017"
         });
 
         this.contenedor.appendChild(footer);
@@ -96,15 +115,6 @@ class LoginPage extends Page {
         this.authController = authController;
     }
 
-    showError(message) {
-        this.errorContainer.innerText = message;
-        HtmlUtil.showElement(this.errorContainer);
-    }
-
-    hideError(message) {
-        HtmlUtil.hideElement(this.errorContainer);
-    }
-
     pintarPagina() {
         this.limpiarPagina();
 
@@ -120,66 +130,36 @@ class LoginPage extends Page {
         let title = HtmlUtil.createElement({
             tag: "h2",
             attr: { "class": "title" },
-            text: "Por favor ingresa con tu usuario y contraseña"
+            text: "Ingresa con tu usuario y contraseña"
         });
         this.loginForm.appendChild(title);
 
-        let focusHandler = () => this.hideError();
+        let focusHandler = () => this.limpiarMensajes();
 
-        let [contUser, labelUser, inputUser] = HtmlUtil.createLabelValuePair({
-            tag: "span",
-            attr: { "class": "etiqueta-valor" },
-            labelTag: "label",
-            labelAttr: {
-                "class": "etiqueta user",
-                "for": "user"
-            },
-            labelText: "Usuario: ",
-            valueTag: "input",
-            valueAttr: {
-                "type": "text",
-                "class": "valor user",
-                "id": "user",
-                "name": "user",
-                "required": "",
-                "autofocus": "",
-                "placeholder": "Nombre de usuario",
-                "pattern": ".{4,20}",
-                "maxlength": "20"
-            },
-            valueEvents: {
-                "focus": focusHandler
-            }
-        });
-        this.inputUsername = inputUser;
-        this.loginForm.appendChild(contUser);
+        this.loginForm.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "username",
+                label: "Usuario:",
+                value: "",
+                placeholder: "Nombre de usuario",
+                pattern: ".{4,20}",
+                events: { "focus": focusHandler },
+                required: true
+            })
+        );
 
-        let [contPass, labelPass, inputPass] = HtmlUtil.createLabelValuePair({
-            tag: "span",
-            attr: { "class": "etiqueta-valor" },
-            labelTag: "label",
-            labelAttr: {
-                "class": "etiqueta password",
-                "for": "password"
-            },
-            labelText: "Contraseña: ",
-            valueTag: "input",
-            valueAttr: {
-                "type": "password",
-                "class": "valor password",
-                "id": "password",
-                "name": "password",
-                "required": "",
-                "placeholder": "Contraseña de usuario",
-                "pattern": ".{4,20}",
-                "maxlength": "20"
-            },
-            valueEvents: {
-                "focus": focusHandler
-            }
-        });
-        this.inputPassword = inputPass;
-        this.loginForm.appendChild(contPass);
+        this.loginForm.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "password",
+                type: "password",
+                label: "Contraseña:",
+                value: "",
+                placeholder: "Contraseña de usuario",
+                pattern: ".{4,20}",
+                events: { "focus": focusHandler },
+                required: true
+            })
+        );
 
         let button = HtmlUtil.createButton({
             text: "Login",
@@ -190,14 +170,7 @@ class LoginPage extends Page {
         });
         this.loginForm.appendChild(button);
 
-        this.errorContainer = HtmlUtil.createElement({
-            tag: "div",
-            attr: {
-                "class": "error",
-                "style": "display: none"
-            }
-        });
-        this.loginForm.appendChild(this.errorContainer);
+        this.contenedorMensajes = this.loginForm;
 
         loginContainer.appendChild(this.loginForm);
         this.contenedor.appendChild(loginContainer);
@@ -205,11 +178,12 @@ class LoginPage extends Page {
     }
 
     doLogin() {
+        this.limpiarMensajes();
         if (this.loginForm.checkValidity()) {
             console.log("OK");
             this.showLoader();
-            let username = this.inputUsername.value;
-            let password = this.inputPassword.value;
+            let username = this.loginForm.username.value;
+            let password = this.loginForm.password.value;
             this.navigator.login(username, password)
                 .then(ok => {
                     if (ok) {
@@ -217,9 +191,9 @@ class LoginPage extends Page {
                         this.navigator.navigateToHome();
                     } else {
                         console.error("¡¡¡Login Error!!!");
-                        this.inputUsername.value = "";
-                        this.inputPassword.value = "";
-                        this.showError("El usuario o la contraseña no corresponden");
+                        this.loginForm.username.value = "";
+                        this.loginForm.password.value = "";
+                        this.pintarError("El usuario o la contraseña no corresponden");
                     }
                     this.hideLoader();
                 })
@@ -228,6 +202,8 @@ class LoginPage extends Page {
                     this.pintarError(data.message);
                     this.hideLoader();
                 });
+        } else {
+            this.pintarError("Alguno de los campos no está informado correctamente");
         }
     }
 
@@ -236,6 +212,78 @@ class LoginPage extends Page {
 class HomePage extends InnerPage {
     constructor(body) {
         super(body);
+    }
+
+    actualizar() {
+        this.pintarPagina();
+    }
+
+    pintarEstructura() {
+        super.pintarEstructura();
+
+        /* HEADER */
+        let contenedorHead = HtmlUtil.createElement({
+            tag: "header",
+            attr: { "class": "page-header home" }
+        });
+        let titulo = HtmlUtil.createElement({
+            tag: "h2",
+            text: "Home"
+        });
+        contenedorHead.appendChild(titulo);
+        this.contenedor.appendChild(contenedorHead);
+
+        /* LISTA */
+        this.contenedorData = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": "data" }
+        });
+        this.contenedor.appendChild(this.contenedorData);
+        this.contenedorMensajes = this.contenedorData;
+
+        /* FOOTER */
+        let contenedorFooter = HtmlUtil.createElement({
+            tag: "footer",
+            attr: { "class": "page-footer home" }
+        });
+
+        /* NAV */
+        let contenedorNav = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": "controles" }
+        });
+
+        this.buttonRefresh = HtmlUtil.createButton({
+            text: "Refrescar",
+            click: () => this.actualizar()
+        });
+        contenedorNav.appendChild(this.buttonRefresh);
+
+        contenedorFooter.appendChild(contenedorNav);
+        this.contenedor.appendChild(contenedorFooter);
+    }
+
+    pintarPagina() {
+        HtmlUtil.removeChilds(this.contenedorData);
+
+        let content = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "home-comtent row"
+            }
+        });
+
+        for (let page in this.navigator.pages) {
+            let pageAttr = this.navigator.pages[page];
+            if (pageAttr.rClass) {
+                let resumen = new pageAttr.rClass(content);
+                resumen.pintar();
+            }
+        }
+
+
+
+        this.contenedorData.appendChild(content);
     }
 }
 
@@ -282,32 +330,11 @@ class AuthController {
 }
 
 class NavigationController {
-    constructor(authController) {
+    constructor(authController, home, login, pages) {
         this.authController = authController;
-        this.homePage = "home";
-        this.loginPage = "login";
-        this.pages = {
-            "home": {
-                title: "Home",
-                pClass: HomePage
-            },
-            "comidas": {
-                title: "Comidas",
-                pClass: ComidaPage
-            },
-            "bebidas": {
-                title: "Bebidas",
-                pClass: BebidaPage
-            },
-            "usuarios": {
-                title: "Usuarios",
-                pClass: UserPage
-            },
-            "login": {
-                title: "Logout",
-                pClass: LoginPage
-            }
-        }
+        this.homePage = home;
+        this.loginPage = login;
+        this.pages = pages;
     }
     navigateToUrl(strUrl) {
         console.log("navigateToUrl: " + strUrl);
@@ -339,7 +366,34 @@ class NavigationController {
 class Application {
     constructor() {
         this.authController = new AuthController();
-        this.navigator = new NavigationController(this.authController);
+        this.navigator = new NavigationController(
+            this.authController,
+            "home",
+            "login", {
+                "home": {
+                    title: "Home",
+                    pClass: HomePage
+                },
+                "comidas": {
+                    title: "Comidas",
+                    pClass: ComidaPage,
+                    rClass: ResumenComidaPage
+                },
+                "bebidas": {
+                    title: "Bebidas",
+                    pClass: BebidaPage,
+                    rClass: ResumenBebidaPage
+                },
+                "usuarios": {
+                    title: "Usuarios",
+                    pClass: UserPage
+                },
+                "login": {
+                    title: "Logout",
+                    pClass: LoginPage
+                }
+            }
+        );
     }
     start() {
         this.navigator.navigateToHome();

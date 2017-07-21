@@ -210,7 +210,7 @@ class UserPage extends InnerPage {
         });
         let titulo = HtmlUtil.createElement({
             tag: "h1",
-            text: "Users"
+            text: "Usuarios"
         });
         contenedorHead.appendChild(titulo);
         this.contenedor.appendChild(contenedorHead);
@@ -360,44 +360,63 @@ class DetalleUserPage extends ModalPage {
             attr: { "class": "detalle" }
         });
 
-        let campos = [];
-
         if (this.user._id) {
-            campos.push({
-                labelText: "ID: ",
-                valueText: this.user._id
-            });
-        }
-        campos.push({
-            labelText: "Nombre Usuario: ",
-            valueText: this.user.username
-        });
-        campos.push({
-            labelText: "Nombre: ",
-            valueText: this.user.nombre
-        });
-        campos.push({
-            labelText: "Apellidos: ",
-            valueText: this.user.apellidos
-        });
-        campos.push({
-            labelText: "Correo Electrónico: ",
-            valueText: this.user.email
-        });
-        if (this.user._id) {
-            campos.push({
-                labelText: "V: ",
-                valueText: this.user.__v
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "ID:",
+                    value: this.user._id,
+                    labelCols: 3
+                })
+            );
         }
 
-        let lista = HtmlUtil.createLabelValuePairList({
-            labelTag: "label",
-            valueTag: "span",
-            data: campos
-        });
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Nombre Usuario:",
+                value: this.user.username,
+                labelCols: 3
+            })
+        );
 
-        content.appendChild(lista);
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Nombre:",
+                value: this.user.nombre,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Apellidos:",
+                value: this.user.apellidos,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Correo Electrónico:",
+                value: this.user.email,
+                labelCols: 3
+            })
+        );
+
+        if (this.user._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "V:",
+                    value: this.user.__v,
+                    labelCols: 3
+                })
+            );
+        }
 
         super.setContent(content);
     }
@@ -474,84 +493,97 @@ class FormUserPage extends DetalleUserPage {
         });
         this.form = content;
 
-        let campos = [];
-
         if (this.user._id) {
-            campos.push({
-                labelText: "ID: ",
-                valueTag: "span",
-                valueText: this.user._id
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "ID:",
+                    value: this.user._id,
+                    labelCols: 3
+                })
+            );
         }
-        campos.push({
-            labelText: "Nombre Usuario: ",
-            valueAttr: {
-                "name": "username",
-                "type": "text",
-                "value": this.user.username
-            }
-        });
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "username",
+                type: "text",
+                label: "Nombre Usuario:",
+                value: this.user.username,
+                required: true,
+                labelCols: 3
+            })
+        );
+
         if (!this.user._id) {
-            campos.push({
-                labelText: "Contraseña: ",
-                valueAttr: {
-                    "name": "password",
-                    "type": "password",
-                    "value": ""
-                }
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    id: "password",
+                    type: "password",
+                    label: "Contraseña:",
+                    value: this.user.password,
+                    required: true,
+                    labelCols: 3
+                })
+            );
         }
-        campos.push({
-            labelText: "Nombre: ",
-            valueAttr: {
-                "name": "nombre",
-                "type": "text",
-                "value": this.user.nombre
-            }
-        });
-        campos.push({
-            labelText: "Apellidos: ",
-            valueAttr: {
-                "name": "apellidos",
-                "type": "text",
-                "value": this.user.apellidos
-            }
-        });
-        campos.push({
-            labelText: "Correo Electrónico: ",
-            valueAttr: {
-                "name": "email",
-                "type": "email",
-                "value": this.user.email
-            }
-        });
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "nombre",
+                type: "text",
+                label: "Nombre:",
+                value: this.user.nombre,
+                required: true,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "apellidos",
+                type: "text",
+                label: "Apellidos:",
+                value: this.user.apellidos,
+                required: true,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "email",
+                type: "email",
+                label: "Correo Electrónico:",
+                value: this.user.email,
+                required: true,
+                labelCols: 3
+            })
+        );
+
         if (this.user._id) {
-            campos.push({
-                labelText: "V: ",
-                valueTag: "span",
-                valueText: this.user.__v
-            });
-            campos.push({
-                labelText: "Contraseña actual: ",
-                valueTag: "input",
-                valueAttr: {
-                    "name": "password",
-                    "type": "password",
-                    "value": ""
-                }
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "V:",
+                    value: this.user.__v,
+                    labelCols: 3
+                })
+            );
         }
 
-        let lista = HtmlUtil.createLabelValuePairList({
-            labelTag: "label",
-            valueTag: "input",
-            valueAttr: {
-                "required": true
-            },
-            data: campos
-        });
-
-        content.appendChild(lista);
+        if (this.user._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    id: "password",
+                    type: "password",
+                    label: "Contraseña actual:",
+                    value: this.user.password,
+                    required: true,
+                    labelCols: 3
+                })
+            );
+        }
 
         super.setContent(content);
     }
@@ -613,50 +645,76 @@ class EliminarUserPage extends DetalleUserPage {
         });
         this.form = content;
 
-        let campos = [];
+        if (this.user._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "ID:",
+                    value: this.user._id,
+                    labelCols: 3
+                })
+            );
+        }
 
-        campos.push({
-            labelText: "ID: ",
-            valueText: this.user._id
-        });
-        campos.push({
-            labelText: "Nombre Usuario: ",
-            valueText: this.user.username
-        });
-        campos.push({
-            labelText: "Nombre: ",
-            valueText: this.user.nombre
-        });
-        campos.push({
-            labelText: "Apellidos: ",
-            valueText: this.user.apellidos
-        });
-        campos.push({
-            labelText: "Correo Electrónico: ",
-            valueText: this.user.email
-        });
-        campos.push({
-            labelText: "V: ",
-            valueText: this.user.__v
-        });
-        campos.push({
-            labelText: "Contraseña actual: ",
-            valueTag: "input",
-            valueAttr: {
-                "name": "password",
-                "type": "password",
-                "value": "",
-                "required": true
-            }
-        });
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Nombre Usuario:",
+                value: this.user.username,
+                labelCols: 3
+            })
+        );
 
-        let lista = HtmlUtil.createLabelValuePairList({
-            labelTag: "label",
-            valueTag: "span",
-            data: campos
-        });
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Nombre:",
+                value: this.user.nombre,
+                labelCols: 3
+            })
+        );
 
-        content.appendChild(lista);
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Apellidos:",
+                value: this.user.apellidos,
+                labelCols: 3
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Correo Electrónico:",
+                value: this.user.email,
+                labelCols: 3
+            })
+        );
+
+        if (this.user._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "V:",
+                    value: this.user.__v,
+                    labelCols: 3
+                })
+            );
+        }
+
+        if (this.user._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    id: "password",
+                    type: "password",
+                    label: "Contraseña actual:",
+                    value: this.user.password,
+                    required: true,
+                    labelCols: 3
+                })
+            );
+        }
 
         super.setContent(content);
     }

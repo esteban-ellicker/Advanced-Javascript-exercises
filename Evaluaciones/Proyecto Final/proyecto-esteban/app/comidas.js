@@ -241,15 +241,15 @@ class ComidaPage extends InnerPage {
                 comida.tipo,
                 {
                     text: this.formatCurrency(comida.precio),
-                    attr: { "class": "numero" }
+                    attr: { "class": "number" }
                 },
                 {
                     text: this.formatNumber(comida.calorias),
-                    attr: { "class": "numero" }
+                    attr: { "class": "number" }
                 },
                 {
                     text: this.formatNumber(comida.existencias),
-                    attr: { "class": "numero" }
+                    attr: { "class": "number" }
                 }
             ]);
             let tdAcciones = HtmlUtil.createElement({
@@ -340,48 +340,65 @@ class DetalleComidaPage extends ModalPage {
             attr: { "class": "detalle" }
         });
 
-        let campos = [];
-
         if (this.comida._id) {
-            campos.push({
-                labelText: "ID: ",
-                valueText: this.comida._id
-            });
-        }
-        campos.push({
-            labelText: "Nombre: ",
-            valueText: this.comida.nombre
-        });
-        campos.push({
-            labelText: "Tipo: ",
-            valueText: this.comida.tipo
-        });
-        campos.push({
-            labelText: "Precio: ",
-            valueText: this.formatCurrency(this.comida.precio)
-        });
-        campos.push({
-            labelText: "Calorias: ",
-            valueText: this.formatNumber(this.comida.calorias)
-        });
-        campos.push({
-            labelText: "Existencias: ",
-            valueText: this.formatNumber(this.comida.existencias)
-        });
-        if (this.comida._id) {
-            campos.push({
-                labelText: "V: ",
-                valueText: this.comida.__v
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "ID:",
+                    value: this.comida._id
+                })
+            );
         }
 
-        let lista = HtmlUtil.createLabelValuePairList({
-            labelTag: "span",
-            valueTag: "span",
-            data: campos
-        });
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Nombre:",
+                value: this.comida.nombre
+            })
+        );
 
-        content.appendChild(lista);
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Tipo:",
+                value: this.comida.tipo
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Precio:",
+                value: this.formatCurrency(this.comida.precio)
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Calorias:",
+                value: this.formatNumber(this.comida.calorias)
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Existencias:",
+                value: this.formatNumber(this.comida.existencias)
+            })
+        );
+
+        if (this.comida._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "V:",
+                    value: this.comida.__v
+                })
+            );
+        }
 
         super.setContent(content);
     }
@@ -455,82 +472,81 @@ class FormComidaPage extends DetalleComidaPage {
         });
         this.form = content;
 
-        let campos = [];
-
         if (this.comida._id) {
-            campos.push({
-                labelText: "ID: ",
-                valueTag: "span",
-                valueText: this.comida._id
-            });
-        }
-        campos.push({
-            labelText: "Nombre: ",
-            valueAttr: {
-                "name": "nombre",
-                "type": "text",
-                "value": this.comida.nombre
-            }
-        });
-        campos.push({
-            labelText: "Tipo: ",
-            valueAttr: {
-                "name": "tipo",
-                "type": "text",
-                "value": this.comida.tipo
-            }
-        });
-        campos.push({
-            labelText: "Precio: ",
-            valueAttr: {
-                "name": "precio",
-                "type": "number",
-                "class": "numero",
-                "min": 0,
-                "max": 10000,
-                "value": this.comida.precio
-            }
-        });
-        campos.push({
-            labelText: "Calorias: ",
-            valueAttr: {
-                "name": "calorias",
-                "type": "number",
-                "class": "numero",
-                "min": 0,
-                "max": 10000,
-                "value": this.comida.calorias
-            }
-        });
-        campos.push({
-            labelText: "Existencias: ",
-            valueAttr: {
-                "name": "existencias",
-                "type": "number",
-                "class": "numero",
-                "min": 0,
-                "max": 10000,
-                "value": this.comida.existencias
-            }
-        });
-        if (this.comida._id) {
-            campos.push({
-                labelText: "V: ",
-                valueTag: "span",
-                valueText: this.comida.__v
-            });
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "ID:",
+                    value: this.comida._id
+                })
+            );
         }
 
-        let lista = HtmlUtil.createLabelValuePairList({
-            labelTag: "label",
-            valueTag: "input",
-            valueAttr: {
-                "required": true
-            },
-            data: campos
-        });
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "nombre",
+                type: "text",
+                label: "Nombre:",
+                value: this.comida.nombre,
+                required: true
+            })
+        );
 
-        content.appendChild(lista);
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "tipo",
+                type: "select",
+                label: "Tipo:",
+                value: this.comida.tipo,
+                options: ["Entrante", "Principal", "Postre"]
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "precio",
+                type: "number",
+                label: "Precio:",
+                value: this.comida.precio,
+                min: 0,
+                max: 10000,
+                required: true
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "calorias",
+                type: "number",
+                label: "Calorias:",
+                value: this.comida.calorias,
+                min: 0,
+                max: 10000,
+                required: true
+            })
+        );
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                id: "existencias",
+                type: "number",
+                label: "Existencias:",
+                value: this.comida.existencias,
+                min: 0,
+                max: 10000,
+                required: true
+            })
+        );
+
+        if (this.comida._id) {
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "V:",
+                    value: this.comida.__v
+                })
+            );
+        }
 
         super.setContent(content);
     }
@@ -571,5 +587,180 @@ class EliminarComidaPage extends DetalleComidaPage {
                 this.pintarError(data.message);
                 this.hideLoader();
             });
+    }
+}
+
+class ResumenComidaPage extends PageFragment {
+    constructor(body) {
+        super(body);
+        this.comidaClient = new ComidaClient();
+        this.resumen = null;
+    }
+
+    getResumen() {
+        this.showLoader();
+        this.comidaClient.get()
+            .then(
+                lista => {
+                    this.resumen = {
+                        total: lista.length,
+                        Entrante: 0,
+                        Principal: 0,
+                        Postre: 0
+                    }
+                    if (lista.length) {
+
+                        this.resumen = lista.reduce(
+                            (result, comida) => {
+                                result[comida.tipo]++;
+                                return result;
+                            },
+                            this.resumen
+                        );
+
+                        lista.sort((a, b) => a.calorias - b.calorias);
+                        this.resumen.minCalorias = lista[0];
+                        this.resumen.maxCalorias = lista[lista.length - 1];
+
+                        lista.sort((a, b) => a.precio - b.precio);
+                        this.resumen.minPrecio = lista[0];
+                        this.resumen.maxPrecio = lista[lista.length - 1];
+
+                        lista.sort((a, b) => a.existencias - b.existencias);
+                        this.resumen.minExistencias = lista[0];
+                        this.resumen.maxExistencias = lista[lista.length - 1];
+                    }
+
+                    console.log(this.resumen);
+
+                    this.pintarPagina();
+                    this.hideLoader();
+                }
+            );
+    }
+
+    pintarEstructura() {
+        /* CONTENEDOR */
+        this.contenedor = HtmlUtil.createElement({
+            tag: "div",
+            attr: { "class": "resumen-container col-sm-12 col-md-6" }
+        });
+        this.appendChild(this.contenedor);
+    }
+
+    pintarPagina() {
+        let content = HtmlUtil.createElement({
+            tag: "div",
+            attr: {
+                "class": "resumen-content"
+            }
+        });
+        let titulo = HtmlUtil.createElement({
+            tag: "h3",
+            text: "Resumen Comidas"
+        });
+        content.appendChild(titulo);
+
+        content.appendChild(
+            HtmlUtil.createFormGroup({
+                type: "static",
+                label: "Total:",
+                value: this.resumen.total
+            })
+        );
+
+        if (this.resumen.total) {
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Entrantes:",
+                    value: this.resumen.Entrante,
+                    labelCols: 3
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Principales:",
+                    value: this.resumen.Principal,
+                    labelCols: 3
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Postres:",
+                    value: this.resumen.Postre,
+                    labelCols: 3
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Mayor Precio:",
+                    value: `${this.resumen.maxPrecio.nombre}: ${this.formatCurrency(this.resumen.maxPrecio.precio)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Menor Precio:",
+                    value: `${this.resumen.minPrecio.nombre}: ${this.formatCurrency(this.resumen.minPrecio.precio)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Más Calorias:",
+                    value: `${this.resumen.maxCalorias.nombre}: ${this.formatNumber(this.resumen.maxCalorias.calorias)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Menos Calorias:",
+                    value: `${this.resumen.minCalorias.nombre}: ${this.formatNumber(this.resumen.minCalorias.calorias)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Más Existencias:",
+                    value: `${this.resumen.maxExistencias.nombre}: ${this.formatNumber(this.resumen.maxExistencias.existencias)}`,
+                    labelCols: 4
+                })
+            );
+
+            content.appendChild(
+                HtmlUtil.createFormGroup({
+                    type: "static",
+                    label: "Menos Existencias:",
+                    value: `${this.resumen.minExistencias.nombre}: ${this.formatNumber(this.resumen.minExistencias.existencias)}`,
+                    labelCols: 4
+                })
+            );
+
+        }
+
+        this.contenedor.appendChild(content);
+    }
+
+    pintar() {
+        if (!this.contenedor) {
+            this.pintarEstructura();
+        }
+        this.getResumen();
     }
 }
